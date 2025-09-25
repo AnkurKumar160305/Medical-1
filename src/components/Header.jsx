@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import AuthModal from './Auth/AuthModal';
+import DiseaseRadarModal from './DiseaseRadar/DiseaseRadarModal';
 
 function Header({ navActive, setNavActive }) {
   const [headerActive, setHeaderActive] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [diseaseRadarOpen, setDiseaseRadarOpen] = useState(false);
   const { user, logout } = useAuth();
   const { t } = useLanguage();
 
@@ -24,6 +26,10 @@ function Header({ navActive, setNavActive }) {
 
   const toggleNav = () => {
     setNavActive(!navActive);
+  };
+
+  const handleDiseaseRadarClick = () => {
+    setDiseaseRadarOpen(true);
   };
 
   const handleAuthClick = () => {
@@ -96,6 +102,15 @@ function Header({ navActive, setNavActive }) {
         </nav>
 
         <button 
+          className="disease-radar-btn" 
+          onClick={handleDiseaseRadarClick}
+          title="Disease Outbreak Radar"
+        >
+          <ion-icon name="pulse-outline"></ion-icon>
+          <span className="radar-text">Disease Radar</span>
+        </button>
+
+        <button 
           className="auth-btn" 
           onClick={handleAuthClick}
         >
@@ -123,6 +138,11 @@ function Header({ navActive, setNavActive }) {
       <AuthModal 
         isOpen={authModalOpen} 
         onClose={() => setAuthModalOpen(false)} 
+      />
+      
+      <DiseaseRadarModal 
+        isOpen={diseaseRadarOpen} 
+        onClose={() => setDiseaseRadarOpen(false)} 
       />
     </>
   );
